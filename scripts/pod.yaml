@@ -1,0 +1,22 @@
+# helper pod for debugging
+# Fill in the pvc name below and apply it.
+# Then kubectl exec to debug
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pv-checker
+  namespace: prod
+spec:
+  restartPolicy: Never
+  containers:
+  - name: pv-checker
+    image: "k8s.gcr.io/busybox"
+    command: ["/bin/sh", "-c", "sleep 10000"]
+    volumeMounts:
+    - name: volume
+      mountPath: /mnt/azure
+  volumes:
+  - name: volume
+    persistentVolumeClaim:
+      claimName: ...
+
