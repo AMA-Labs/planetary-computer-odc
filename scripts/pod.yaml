@@ -1,6 +1,9 @@
 # helper pod for debugging
 # Fill in the pvc name below and apply it.
 # Then kubectl exec to debug
+# kubectl -n prod apply -f scripts/pod.yaml
+# kubectl -n prod exec pv-checker -- df -h /mnt/azure
+# kubectl -n prod delete pod pv-checker
 apiVersion: v1
 kind: Pod
 metadata:
@@ -18,5 +21,4 @@ spec:
   volumes:
   - name: volume
     persistentVolumeClaim:
-      claimName: ...
-
+      claimName: claim-...
