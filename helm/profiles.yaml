@@ -21,6 +21,25 @@ daskhub:
                   values:
                   - gpu
 
+        # ODC singleuser -----------------------------------------------------
+        - display_name: "CPU - ODC"
+          default: "True"
+          description: '4 cores, 32 GiB of memory. <a href="https://github.com/pangeo-data/pangeo-docker-images">Open Data Cube Notebook</a> environment.'
+          kubespawner_override:
+            image: "${odc_image}"
+            cpu_guarantee: 3
+            cpu_limit: 4
+            mem_guarantee: "25G"
+            mem_limit: "32G"
+            extra_resource_limits: {"nvidia.com/gpu": "0"}
+            default_url: "/lab/tree/PlanetaryComputerExamples/README.md"
+            node_affinity_required:
+              - matchExpressions:
+                - key: pc.microsoft.com/userkind
+                  operator: NotIn
+                  values:
+                  - gpu
+      
         # R --------------------------------------------------------------------
         - display_name: "R"
           description: '8 cores, 64 GiB of memory. R geospatial environment.'

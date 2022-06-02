@@ -51,6 +51,11 @@ variable "python_image" {
   description = "The tag for the python environment image."
 }
 
+variable "odc_image" {
+  type        = string
+  description = "The tag for the Open Data Cube environment image."
+}
+
 variable "r_image" {
   type        = string
   description = "The tag for the R environment image."
