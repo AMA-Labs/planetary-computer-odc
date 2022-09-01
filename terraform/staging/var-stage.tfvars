@@ -1,0 +1,1 @@
+pc_resources_kv = "odc-deploy-secrets"

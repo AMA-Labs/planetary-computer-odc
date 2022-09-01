@@ -20,7 +20,7 @@ resource "helm_release" "dhub" {
   values = [
     "${templatefile("../../helm/values.yaml", { oauth_host = var.oauth_host, jupyterhub_host = var.jupyterhub_host, namespace = var.environment })}",
     "${file("../../helm/jupyterhub_opencensus_monitor.yaml")}",
-    "${templatefile("../../helm/profiles.yaml", { python_image = var.python_image, r_image = var.r_image, gpu_pytorch_image = var.gpu_pytorch_image, gpu_tensorflow_image = var.gpu_tensorflow_image, qgis_image = var.qgis_image })}",
+    "${templatefile("../../helm/profiles.yaml", { python_image = var.python_image, odc_image = var.odc_image, r_image = var.r_image, gpu_pytorch_image = var.gpu_pytorch_image, gpu_tensorflow_image = var.gpu_tensorflow_image, qgis_image = var.qgis_image })}",
     # workaround https://github.com/hashicorp/terraform-provider-helm/issues/669
     "${templatefile("../../helm/kbatch-proxy-values.yaml", { jupyterhub_host = var.jupyterhub_host, dns_label = var.dns_label })}",
   ]
@@ -33,11 +33,11 @@ resource "helm_release" "dhub" {
   # set {
   #   name  = "daskhub.jupyterhub.hub.config.JupyterHub.api_tokens"
   #   value = "${random_password.test_bot_token.result}=pangeotestbot@microsoft.com"
-  # }
+  # }  
 
   set {
     name  = "daskhub.jupyterhub.hub.config.GenericOAuthenticator.oauth_callback_url"
-    value = "https://${var.jupyterhub_host}/compute/hub/oauth_callback"
+    value = "http://${var.jupyterhub_host}/compute/hub/oauth_callback"
   }
 
   set {

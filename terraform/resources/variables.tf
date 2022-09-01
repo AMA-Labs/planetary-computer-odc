@@ -131,7 +131,7 @@ variable "pc_resources_rg" {
 
 variable "pc_resources_kv" {
   type        = string
-  default     = "pc-deploy-secrets"
+  default     = "odc-deploy-secrets"
   description = "The Azure Key Vault name with pre-configured values."
 }
 
@@ -150,7 +150,7 @@ variable "kbatch_proxy_url" {
 # Local variables
 
 locals {
-  stack_id          = "pcc"
+  stack_id          = "odc"
   location          = lower(replace(var.region, " ", ""))
   prefix            = "${local.stack_id}-${local.location}"
   namespaced_prefix = "${local.stack_id}-${var.environment}"

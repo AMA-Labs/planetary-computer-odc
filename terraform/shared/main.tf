@@ -14,7 +14,7 @@ terraform {
   }
   backend "azurerm" {
     resource_group_name  = "pc-manual-resources"
-    storage_account_name = "pctfstate"
+    storage_account_name = "odcstagingtfstate"
     container_name       = "pcc"
     key                  = "shared.tfstate"
   }
@@ -22,7 +22,7 @@ terraform {
 }
 
 locals {
-  stack_id = "pcc"
+  stack_id = "odc"
   region   = "West Europe"
   location = lower(replace(local.region, " ", ""))
   prefix   = "${local.stack_id}-${local.location}"

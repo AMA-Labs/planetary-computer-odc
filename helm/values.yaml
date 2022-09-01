@@ -16,30 +16,31 @@ daskhub:
     hub:
       baseUrl: "/compute/"
       image:
-        name: pcccr.azurecr.io/jupyterhub/k8s-hub
-        tag: "1.0.1.post0"
+        name: jupyterhub/k8s-hub
+        tag: "1.1.3"
 
       config:
         JupyterHub:
           admin_access: false
           admin_users:
-            - taugspurger@microsoft.com
+            - brian.b.terry@ama-inc.com
 
           authenticator_class: generic-oauth
         GenericOAuthenticator:
           # oauth_callback_url, client_secret are set via terraform.
-          client_id: "YRKd72gJAcBEQMyyz8QnT9luJNKoRcCnF7TL4ffx"
-          login_service: 'planetarycomputer'
-          userdata_url: 'https://${oauth_host}.microsoft.com/id/users/userdata'
-          token_url: 'https://${oauth_host}.microsoft.com/id/o/token/'
-          authorize_url: 'https://${oauth_host}.microsoft.com/id/o/authorize/'
+          client_id: "a12c523c-2ec6-475c-99ae-83255717ac39"
+          login_service: 'hub login'
+          userdata_url: 'https://graph.microsoft.com/oidc/userinfo'
+          token_url: 'https://${oauth_host}/oauth2/v2.0/token'
+          authorize_url: 'https://${oauth_host}/oauth2/v2.0/authorize'
           username_key: 'email'
           userdata_method: 'GET'
+          scope: ['openid', 'email']
 
       extraEnv:
         # This service principal has read permission on Azure API management.
-        AZURE_TENANT_ID: "72f988bf-86f1-41af-91ab-2d7cd011db47"
-        AZURE_CLIENT_ID: "185e2bd5-f11e-490c-8849-7889951120b4"
+        AZURE_TENANT_ID: "71f3a1e4-414e-49b2-904b-2b5faf35ec34"
+        AZURE_CLIENT_ID: "a12c523c-2ec6-475c-99ae-83255717ac39"
         # AZURE_CLIENT_SECRET, PC_ID_TOKEN, APPLICATIONINSIGHTS_CONNECTION_STRING are set via terraform
 
       networkPolicy:
@@ -153,9 +154,11 @@ daskhub:
 
     proxy:
       https:
-        enabled: true
+        enabled: false
         letsencrypt:
-          contactEmail: "taugspurger@microsoft.com"
+          contactEmail: "brian.b.terry@ama-inc.com"
+      service:
+        type: ClusterIP
 
     singleuser:
       # These limits match the "large" profiles, so that a user requesting large will be successfully scheduled.
@@ -239,12 +242,12 @@ daskhub:
 
       backend:
         scheduler:
-          cpu:
-            requests: 1.0
-            limit: 2.0
-          memory:
-            requests: 8G
-            limit: 10G
+          # cpu:
+          #   requests: 1.0
+          #   limit: 2.0
+          # memory:
+          #   requests: 8G
+          #   limit: 10G
           extraPodConfig:
             tolerations:
               - key: 'hub.jupyter.org_dedicated'
@@ -413,7 +416,7 @@ daskhub:
             c.Backend.cluster_options = cluster_options
     traefik:
       service:
-        type: LoadBalancer
+        type: NodePort
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:

@@ -97,20 +97,20 @@ resource "azurerm_kubernetes_cluster_node_pool" "cpu_worker_pool" {
   enable_auto_scaling   = true
   os_disk_size_gb       = 128
   orchestrator_version  = var.kubernetes_version
-  priority              = "Spot"
-  eviction_policy       = "Delete"
-  spot_max_price        = -1
+  #priority              = "Spot"
+  #eviction_policy       = "Delete"
+  #spot_max_price        = -1
   vnet_subnet_id        = azurerm_subnet.node_subnet.id
 
   node_labels = {
     "k8s.dask.org/dedicated"                = "worker",
     "pc.microsoft.com/workerkind"           = "cpu",
-    "kubernetes.azure.com/scalesetpriority" = "spot"
+    #"kubernetes.azure.com/scalesetpriority" = "spot"
   }
 
-  node_taints = [
-    "kubernetes.azure.com/scalesetpriority=spot:NoSchedule",
-  ]
+  # node_taints = [
+  #   "kubernetes.azure.com/scalesetpriority=spot:NoSchedule",
+  # ]
 
   min_count = var.cpu_worker_pool_min_count
   max_count = var.cpu_worker_max_count
