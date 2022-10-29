@@ -37,7 +37,7 @@ resource "helm_release" "dhub" {
 
   set {
     name  = "daskhub.jupyterhub.hub.config.GenericOAuthenticator.oauth_callback_url"
-    value = "http://${var.jupyterhub_host}/compute/hub/oauth_callback"
+    value = "https://${var.jupyterhub_host}/compute/hub/oauth_callback"
   }
 
   set {

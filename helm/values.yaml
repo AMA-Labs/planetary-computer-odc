@@ -17,7 +17,7 @@ daskhub:
       baseUrl: "/compute/"
       image:
         name: jupyterhub/k8s-hub
-        tag: "1.1.3"
+        tag: "1.1.4"
 
       config:
         JupyterHub:
@@ -105,14 +105,14 @@ daskhub:
               # user in the Django App
               import os
               import requests
-              import azure.identity
-              import azure.mgmt.apimanagement
+              # import azure.identity
+              # import azure.mgmt.apimanagement
               from traitlets.log import get_logger
 
               log = get_logger()
               log.info("starting pre_spawn_hook for %s" % username)
               # The hub is configured with "service principal with secret" environment variables.
-              identity = azure.identity.EnvironmentCredential()
+              # identity = azure.identity.EnvironmentCredential()
               PC_ID_TOKEN = os.environ["PC_ID_TOKEN"]
 
               r = requests.get(
@@ -128,23 +128,23 @@ daskhub:
               log.debug("Got PK %s", pk)
               # This PK should match the PK in API management.
               # The Hub pod is configured to talk to API Management
-              identity = azure.identity.DefaultAzureCredential()
-              apim_client = azure.mgmt.apimanagement.ApiManagementClient(
-                  identity,
-                  "9da7523a-cb61-4c3e-b1d4-afa5fc6d2da9"
-              )
+              # identity = azure.identity.DefaultAzureCredential()
+              # apim_client = azure.mgmt.apimanagement.ApiManagementClient(
+              #     identity,
+              #     "9da7523a-cb61-4c3e-b1d4-afa5fc6d2da9"
+              # )
 
-              # We can now request the subscription. These follow the pattern
-              # {id}-planetarycomputer
-              try:
-                  log.info("Getting subscriptions for %s-%s", username, pk)
-                  keys = apim_client.subscription.list_secrets(
-                      "pc-manual-resources", "planetarycomputer", f"{pk}-planetarycomputer"
-                  )
-              except Exception as e:
-                  log.exception("Failed to get secrets for %s", username)
-              else:
-                  spawner.environment["PC_SDK_SUBSCRIPTION_KEY"] = keys.primary_key
+              # # We can now request the subscription. These follow the pattern
+              # # {id}-planetarycomputer
+              # try:
+              #     log.info("Getting subscriptions for %s-%s", username, pk)
+              #     keys = apim_client.subscription.list_secrets(
+              #         "pc-manual-resources", "planetarycomputer", f"{pk}-planetarycomputer"
+              #     )
+              # except Exception as e:
+              #     log.exception("Failed to get secrets for %s", username)
+              # else:
+              #     spawner.environment["PC_SDK_SUBSCRIPTION_KEY"] = keys.primary_key
 
           c.KubeSpawner.pre_spawn_hook = pre_spawn_hook
 
@@ -158,7 +158,7 @@ daskhub:
         letsencrypt:
           contactEmail: "brian.b.terry@ama-inc.com"
       service:
-        type: ClusterIP
+        type: NodePort
 
     singleuser:
       # These limits match the "large" profiles, so that a user requesting large will be successfully scheduled.

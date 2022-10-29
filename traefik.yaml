@@ -1,0 +1,13 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: ingressroutebar
+  namespace: staging
+
+spec:
+  routes:
+  - match: Host(`*`) && PathPrefix(`/`)
+    kind: Rule
+    services:
+    - name: public-proxy
+      namespace: staging

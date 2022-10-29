@@ -17,18 +17,18 @@ module "resources" {
   # DaskHub ------------------------------------------------------------------
   dns_label                 = "pcc-staging"
   oauth_host                = "login.microsoftonline.com/71f3a1e4-414e-49b2-904b-2b5faf35ec34"
-  jupyterhub_host           = "localhost:8000"
+  jupyterhub_host           = "hub.earthanalyticslab.com"
   user_placeholder_replicas = 0
   stac_url                  = "https://planetarycomputer-staging.microsoft.com/api/stac/v1/"
 
   jupyterhub_singleuser_image_name = "mcr.microsoft.com/planetary-computer/python" # "pcccr.azurecr.io/public/planetary-computer/python"
-  jupyterhub_singleuser_image_tag  = "latest" # "2022.05.11.0"
-  python_image                     = "mcr.microsoft.com/planetary-computer/python" # "pcccr.azurecr.io/public/planetary-computer/python:2022.05.11.0"
-  odc_image                        = "odccr.azurecr.io/public/planetary-computer/odc:2022.6.2.0"
-  r_image                          = "pcccr.azurecr.io/public/planetary-computer/r:2022.01.17.0"
-  gpu_pytorch_image                = "pcccr.azurecr.io/public/planetary-computer/gpu-pytorch:2022.05.2.0"
-  gpu_tensorflow_image             = "pcccr.azurecr.io/public/planetary-computer/gpu-tensorflow:2022.02.14.0"
-  qgis_image                       = "pcccr.azurecr.io/planetary-computer/qgis:3.18.0.1"
+  jupyterhub_singleuser_image_tag  = "latest"
+  python_image                     = "mcr.microsoft.com/planetary-computer/python:latest" # "pcccr.azurecr.io/public/planetary-computer/python:2022.05.11.0"
+  odc_image                        = "brianbterry/odc-planetary-computer:pg12"
+  r_image                          = "mcr.microsoft.com/planetary-computer/r:2022.01.17.0"
+  gpu_pytorch_image                = "mcr.microsoft.com/public/planetary-computer/gpu-pytorch:2022.05.2.0"
+  gpu_tensorflow_image             = "mcr.microsoft.com/public/planetary-computer/gpu-tensorflow:2022.02.14.0"
+  qgis_image                       = "mcr.microsoft.com/planetary-computer/qgis:3.18.0.1"
 
   kbatch_proxy_url = "http://dhub-staging-kbatch-proxy.staging.svc.cluster.local"
 }

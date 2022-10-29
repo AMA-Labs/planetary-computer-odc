@@ -32,7 +32,7 @@ daskhub:
             mem_guarantee: "25G"
             mem_limit: "32G"
             extra_resource_limits: {"nvidia.com/gpu": "0"}
-            default_url: "/lab/tree/PlanetaryComputerExamples/README.md"
+            default_url: "/lab/README.md"
             node_affinity_required:
               - matchExpressions:
                 - key: pc.microsoft.com/userkind
